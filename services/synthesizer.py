@@ -1,22 +1,22 @@
 """
-services/synthesizer.py — Phase 3 (Priority-0 fixed)
-
-Fix 1: Detailed Gemini error logging — no silent exception swallowing.
-Fix 2: JSON-mode synthesis response for multi-doc mode — eliminates regex parsing fragility.
-Fix 3: Graceful structured-output fallback: if JSON parse fails, re-prompt with plain text
-       and return a best-effort parse rather than "I could not find this information."
+services/synthesizer.py — Phase 3 (Enterprise v3)
 
 Responsibilities:
   - Group retrieved chunks by source document
   - Format context with labeled [DOC | Page N | Chunk seq] headers for the LLM
-  - Select the appropriate prompt (single-doc vs multi-doc)
-  - Call Gemini with JSON response mode (multi-doc) or plain text (single-doc)
+  - Select the appropriate prompt (single-doc vs multi-doc) based on intent
+  - Route to appropriate model via model_router (circuit breaker + intent routing)
   - Parse the structured multi-doc JSON response into machine-readable fields:
       * evidence_by_document  : {doc: [claims]}
       * conflicts             : [conflict strings]
       * structured_sources    : [{doc, page, chunk_seq, description}]
   - Link claims back to citations via claim_text
   - Return an enriched result dict
+
+v3 changes:
+  - Uses model_router.generate() instead of direct Gemini calls
+  - Adds intent parameter for model selection (comparative → Pro)
+  - Removes duplicate Ollama fallback (handled by model_router)
 """
 from __future__ import annotations
 
@@ -25,14 +25,11 @@ import json
 import logging
 from typing import Dict, List, Optional, Tuple
 
-from google import genai
-
 from config import settings
 from services.prompts import SINGLE_DOC_QA_PROMPT, MULTI_DOC_SYNTHESIS_PROMPT
 from utils.logger import get_logger
 
 logger = get_logger(__name__)
-client = genai.Client(api_key=settings.GOOGLE_API_KEY)
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -276,88 +273,44 @@ def link_claims_to_chunks(
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# Ollama Fallback (non-blocking, logs properly)
+# Model-Router backed generation call
 # ─────────────────────────────────────────────────────────────────────────────
 
-async def _call_ollama(prompt: str) -> str:
-    """Local Ollama generation fallback — logs properly, never silently fails."""
-    model = "llama3.1:8b"
-    try:
-        import torch
-        if torch.cuda.is_available():
-            model = "qwen2.5:14b"
-    except ImportError:
-        if getattr(settings, "RERANKER_USE_GPU", False):
-            model = "qwen2.5:14b"
-
-    import httpx
-    try:
-        async with httpx.AsyncClient(timeout=45.0) as http:
-            res = await http.post(
-                "http://localhost:11434/api/generate",
-                json={"model": model, "prompt": prompt, "stream": False},
-            )
-            if res.status_code == 200:
-                text = res.json().get("response", "").strip()
-                if text:
-                    return text
-            logger.warning(
-                "Ollama returned non-200",
-                extra={"status_code": res.status_code},
-            )
-    except Exception as exc:
-        logger.error(
-            "Ollama fallback unavailable",
-            extra={"error_type": type(exc).__name__, "error": str(exc)},
-        )
-    return ""   # Empty string — caller decides the fallback message
-
-
-# ─────────────────────────────────────────────────────────────────────────────
-# Gemini Call — detailed error logging (Fix 1)
-# ─────────────────────────────────────────────────────────────────────────────
-
-async def _call_gemini(
+async def _call_model(
     prompt: str,
     use_json_mode: bool = False,
+    intent=None,
 ) -> str:
     """
-    Call Gemini with full error logging.
+    Call the appropriate LLM via model_router.
 
-    Args:
-        prompt        : The full prompt string.
-        use_json_mode : If True, sets response_mime_type=application/json.
-
-    Returns the response text, or "" on any failure (caller handles fallback).
+    Routes Gemini Flash vs Pro based on intent.
+    Falls back to Ollama on circuit-open or retries exhausted.
+    Returns response text, or "" on complete failure.
     """
-    config: Dict = {"temperature": 0.1}
-    if use_json_mode:
-        config["response_mime_type"] = "application/json"
+    from services.model_router import generate
+    from models.domain import QueryIntent
 
     try:
-        response = client.models.generate_content(
-            model=settings.GEMINI_GENERATION_MODEL,
-            contents=prompt,
-            config=config,
+        text, model_used = await generate(
+            prompt=prompt,
+            intent=intent,
+            use_json_mode=use_json_mode,
+            allow_fallback=True,
         )
-        raw = response.text.strip()
-        if not raw:
-            logger.warning("Gemini returned empty response")
-        return raw
-
+        logger.debug("Generation complete", extra={"model": model_used, "len": len(text)})
+        return text
     except Exception as exc:
-        # Full error logging — type, message, first 200 chars of prompt for context
         logger.error(
-            "Gemini generation call failed",
+            "Model router generation failed",
             extra={
-                "error_type":    type(exc).__name__,
-                "error":         str(exc),
+                "error_type": type(exc).__name__,
+                "error": str(exc)[:300],
                 "use_json_mode": use_json_mode,
-                "prompt_head":   prompt[:200],
             },
         )
-        # Re-raise so caller can decide whether to fall back or propagate
-        raise
+        return ""
+
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -370,6 +323,7 @@ async def synthesize_answer(
     history_block: str = "",
     session_id: Optional[str] = None,
     namespace: Optional[str] = None,
+    intent=None,
 ) -> Dict:
     """
     Generate a grounded, structured answer from retrieved chunks.
@@ -378,9 +332,13 @@ async def synthesize_answer(
       - SINGLE_DOC_QA_PROMPT   : when all chunks come from one source → plain text
       - JSON multi-doc prompt  : when chunks span ≥2 sources → JSON response
 
+    Model routing:
+      - Comparative/Aggregation/Temporal intent → Gemini Pro
+      - All other intents → Gemini Flash
+      - Gemini unavailable → Ollama fallback (via model_router)
+
     Error handling:
-      - Gemini failure → logs full error → tries Ollama fallback
-      - Ollama failure → logs full error → returns honest "not found" (never silently swallowed)
+      - model_router handles retry + circuit breaker + fallback
       - JSON parse error → logs raw snippet → returns best-effort plain text answer
 
     Returns a dict with:
@@ -440,32 +398,16 @@ async def synthesize_answer(
         )
         synthesis_mode = "single_doc"
 
-    # ── Gemini call with Ollama fallback ─────────────────────────────────────
-    raw_response = ""
-    gemini_failed = False
-
-    if settings.GOOGLE_API_KEY:
-        try:
-            raw_response = await _call_gemini(
-                prompt,
-                use_json_mode=is_multi_doc,
-            )
-        except Exception as e:
-            err_str = str(e).lower()
-            if "429" in err_str or "resource_exhausted" in err_str or "quota" in err_str:
-                raise
-            # Error already logged in _call_gemini with full details
-            gemini_failed = True
-    else:
-        gemini_failed = True
-
-    if gemini_failed or not raw_response:
-        logger.info("Attempting Ollama fallback after Gemini failure")
-        raw_response = await _call_ollama(prompt)
+    # ── Model-router call (handles retry + circuit breaker + fallback) ──────────
+    raw_response = await _call_model(
+        prompt,
+        use_json_mode=is_multi_doc,
+        intent=intent,
+    )
 
     if not raw_response:
         logger.error(
-            "Both Gemini and Ollama failed — returning NOT_FOUND",
+            "Model generation failed — returning NOT_FOUND",
             extra={"question": question[:100], "synthesis_mode": synthesis_mode},
         )
         raw_response = NOT_FOUND

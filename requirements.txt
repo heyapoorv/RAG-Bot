@@ -1,21 +1,66 @@
+# ── Core API ──────────────────────────────────────────────────────────────────
 fastapi
-uvicorn
+uvicorn[standard]
+
+# ── AI & Embeddings ────────────────────────────────────────────────────────────
 sentence-transformers
-pinecone-client
 google-genai
-python-dotenv
-pytest
+
+# ── Vector DB ──────────────────────────────────────────────────────────────────
+pinecone-client
+
+# ── Document Parsers ───────────────────────────────────────────────────────────
 PyPDF2
 pdfplumber
 python-docx
+python-pptx
+openpyxl
+pandas
+beautifulsoup4
+lxml
+markdown-it-py
+
+# ── Language Detection ─────────────────────────────────────────────────────────
+langdetect
+
+# ── ML / Retrieval ─────────────────────────────────────────────────────────────
 scikit-learn
-tenacity
-pymongo
-slowapi
+rank_bm25
+
+# ── Security ───────────────────────────────────────────────────────────────────
 PyJWT
 bcrypt
+python-multipart
+
+# ── PII Detection ──────────────────────────────────────────────────────────────
+presidio-analyzer
+presidio-anonymizer
+# spacy model installed separately: python -m spacy download en_core_web_lg
+
+# ── Virus Scanning ─────────────────────────────────────────────────────────────
+clamd
+
+# ── Cache & Storage ─────────────────────────────────────────────────────────────
 redis
+pymongo
+
+# ── Observability ─────────────────────────────────────────────────────────────
 prometheus_client
+opentelemetry-api
+opentelemetry-sdk
+opentelemetry-instrumentation-fastapi
+
+# ── Reliability ────────────────────────────────────────────────────────────────
+tenacity
+slowapi
+
+# ── Config ─────────────────────────────────────────────────────────────────────
 pydantic-settings
+python-dotenv
+
+# ── Testing ───────────────────────────────────────────────────────────────────
+pytest
+pytest-asyncio
 pytest-mock
 mongomock
+httpx
