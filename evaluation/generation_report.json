@@ -1,0 +1,193 @@
+{
+  "avg_latency_ms": 9502.97,
+  "p95_latency_ms": 28226.07,
+  "cache_hit_ratio": 0.3333,
+  "avg_gemini_calls_per_request": 1.5,
+  "avg_tokens_per_request": 184.0,
+  "avg_answer_similarity": 0.875,
+  "avg_hallucination_rate": 0.0,
+  "avg_citation_correctness": 0.5,
+  "total_requests": 12,
+  "details": [
+    {
+      "question": "What is the deductible for the standard auto insurance policy?",
+      "expected_pages": [
+        1
+      ],
+      "answer": "The deductible for the Standard Auto Insurance Policy is $500 (policy.txt).",
+      "cache_hit": false,
+      "latency_ms": 8796.324729919434,
+      "cit_correctness": 0.5,
+      "gemini_calls": 2,
+      "tokens": 249,
+      "judge_similarity": 1.0,
+      "judge_hallucination_rate": 0.0,
+      "judge_citation_correctness": 1.0
+    },
+    {
+      "question": "What are the coverage limits for bodily injury?",
+      "expected_pages": [
+        1
+      ],
+      "answer": "The coverage limit for bodily injury is $100,000 per person and $300,000 per accident (policy.txt).",
+      "cache_hit": false,
+      "latency_ms": 7899.426460266113,
+      "cit_correctness": 0.5,
+      "gemini_calls": 3,
+      "tokens": 251,
+      "judge_similarity": 1.0,
+      "judge_hallucination_rate": 0.0,
+      "judge_citation_correctness": 1.0
+    },
+    {
+      "question": "What does the comprehensive coverage protect against?",
+      "expected_pages": [
+        1
+      ],
+      "answer": "The comprehensive coverage protects against damage to your car caused by reasons other than collision, including incidents like fire, theft, or windstorm (policy.txt).",
+      "cache_hit": false,
+      "latency_ms": 9017.916917800903,
+      "cit_correctness": 0.5,
+      "gemini_calls": 2,
+      "tokens": 270,
+      "judge_similarity": 1.0,
+      "judge_hallucination_rate": 0.0,
+      "judge_citation_correctness": 1.0
+    },
+    {
+      "question": "When is the monthly payment due and what is the late fee?",
+      "expected_pages": [
+        1
+      ],
+      "answer": "Monthly payments are due by the 5th of each month. A fee of $25 will be incurred for late payments (policy.txt).",
+      "cache_hit": false,
+      "latency_ms": 8976.81999206543,
+      "cit_correctness": 0.5,
+      "gemini_calls": 3,
+      "tokens": 258,
+      "judge_similarity": 1.0,
+      "judge_hallucination_rate": 0.0,
+      "judge_citation_correctness": 1.0
+    },
+    {
+      "question": "What is the policy period for the insurance?",
+      "expected_pages": [
+        1
+      ],
+      "answer": "The policy period runs from January 1, 2026 to December 31, 2026 [Source: policy.txt].",
+      "cache_hit": false,
+      "latency_ms": 10637.25209236145,
+      "cit_correctness": 0.5,
+      "gemini_calls": 2,
+      "tokens": 248,
+      "judge_similarity": 1.0,
+      "judge_hallucination_rate": 0.0,
+      "judge_citation_correctness": 1.0
+    },
+    {
+      "question": "What does the roadside assistance coverage provide?",
+      "expected_pages": [
+        2
+      ],
+      "answer": "The Roadside Assistance coverage provides 24/7 towing, flat tire changes, battery jumpstarts, and lockout services. There is a limit of 4 service calls per policy year (policy.txt).",
+      "cache_hit": false,
+      "latency_ms": 9203.170537948608,
+      "cit_correctness": 0.5,
+      "gemini_calls": 2,
+      "tokens": 273,
+      "judge_similarity": 1.0,
+      "judge_hallucination_rate": 0.0,
+      "judge_citation_correctness": 1.0
+    },
+    {
+      "question": "How many service calls are allowed under roadside assistance?",
+      "expected_pages": [
+        2
+      ],
+      "answer": "Under the Roadside Assistance coverage, there is a limit of 4 service calls per policy year (policy.txt).",
+      "cache_hit": false,
+      "latency_ms": 8115.884780883789,
+      "cit_correctness": 0.5,
+      "gemini_calls": 2,
+      "tokens": 257,
+      "judge_similarity": 1.0,
+      "judge_hallucination_rate": 0.0,
+      "judge_citation_correctness": 1.0
+    },
+    {
+      "question": "What is the rental car reimbursement limit?",
+      "expected_pages": [
+        2
+      ],
+      "answer": "I could not find this information in the document.",
+      "cache_hit": false,
+      "latency_ms": 49723.52051734924,
+      "cit_correctness": 0.5,
+      "gemini_calls": 2,
+      "tokens": 238,
+      "judge_similarity": 0.0,
+      "judge_hallucination_rate": 0.0,
+      "judge_citation_correctness": 0.0
+    },
+    {
+      "question": "What is the deductible for the standard auto insurance policy?",
+      "expected_pages": [
+        1
+      ],
+      "answer": "The deductible for the Standard Auto Insurance Policy is $500 (policy.txt).",
+      "cache_hit": true,
+      "latency_ms": 435.84227561950684,
+      "cit_correctness": 0.5,
+      "gemini_calls": 0,
+      "tokens": 33,
+      "judge_similarity": 1.0,
+      "judge_hallucination_rate": 0.0,
+      "judge_citation_correctness": 1.0
+    },
+    {
+      "question": "What are the coverage limits for bodily injury?",
+      "expected_pages": [
+        1
+      ],
+      "answer": "The coverage limit for bodily injury is $100,000 per person and $300,000 per accident (policy.txt).",
+      "cache_hit": true,
+      "latency_ms": 430.7699203491211,
+      "cit_correctness": 0.5,
+      "gemini_calls": 0,
+      "tokens": 35,
+      "judge_similarity": 1.0,
+      "judge_hallucination_rate": 0.0,
+      "judge_citation_correctness": 1.0
+    },
+    {
+      "question": "What does the comprehensive coverage protect against?",
+      "expected_pages": [
+        1
+      ],
+      "answer": "The comprehensive coverage protects against damage to your car caused by reasons other than collision, including incidents like fire, theft, or windstorm (policy.txt).",
+      "cache_hit": true,
+      "latency_ms": 364.4680976867676,
+      "cit_correctness": 0.5,
+      "gemini_calls": 0,
+      "tokens": 54,
+      "judge_similarity": 1.0,
+      "judge_hallucination_rate": 0.0,
+      "judge_citation_correctness": 1.0
+    },
+    {
+      "question": "When is the monthly payment due and what is the late fee?",
+      "expected_pages": [
+        1
+      ],
+      "answer": "Monthly payments are due by the 5th of each month. A fee of $25 will be incurred for late payments (policy.txt).",
+      "cache_hit": true,
+      "latency_ms": 434.2336654663086,
+      "cit_correctness": 0.5,
+      "gemini_calls": 0,
+      "tokens": 42,
+      "judge_similarity": 1.0,
+      "judge_hallucination_rate": 0.0,
+      "judge_citation_correctness": 1.0
+    }
+  ]
+}

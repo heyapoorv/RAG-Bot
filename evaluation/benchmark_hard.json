@@ -1,0 +1,357 @@
+[
+  {
+    "id": "md_001",
+    "category": "multi_document",
+    "question": "Compare the deductible amounts between the standard policy (Version A) and the amended policy (Version B).",
+    "expected_answer": "Version A has a deductible of $500, while Version B has a higher deductible of $750.",
+    "expected_pages": [1],
+    "expected_documents": ["policy_a.txt", "policy_b.txt"],
+    "requires_conflict_detection": true
+  },
+  {
+    "id": "md_002",
+    "category": "multi_document",
+    "question": "What are the bodily injury coverage limits in each policy version?",
+    "expected_answer": "Version A covers $100,000 per person and $300,000 per accident. Version B increased these limits to $150,000 per person and $500,000 per accident.",
+    "expected_pages": [1],
+    "expected_documents": ["policy_a.txt", "policy_b.txt"],
+    "requires_conflict_detection": true
+  },
+  {
+    "id": "md_003",
+    "category": "multi_document",
+    "question": "How does the rental car reimbursement differ between the two policy versions?",
+    "expected_answer": "Version A reimburses up to $30 per day for a maximum of 10 days. Version B increased this to $40 per day for up to 14 days.",
+    "expected_pages": [2],
+    "expected_documents": ["policy_a.txt", "policy_b.txt"],
+    "requires_conflict_detection": true
+  },
+  {
+    "id": "md_004",
+    "category": "multi_document",
+    "question": "How does the roadside assistance service call limit differ between the two policies?",
+    "expected_answer": "Version A allows 4 service calls per policy year. Version B increased this limit to 6 service calls per policy year.",
+    "expected_pages": [2],
+    "expected_documents": ["policy_a.txt", "policy_b.txt"],
+    "requires_conflict_detection": true
+  },
+  {
+    "id": "md_005",
+    "category": "multi_document",
+    "question": "What are the late payment fees and due dates in each policy version?",
+    "expected_answer": "Version A requires payment by the 5th of each month with a $25 late fee. Version B changed the due date to the 10th of each month with a $50 late fee.",
+    "expected_pages": [1],
+    "expected_documents": ["policy_a.txt", "policy_b.txt"],
+    "requires_conflict_detection": true
+  },
+  {
+    "id": "md_006",
+    "category": "multi_document",
+    "question": "How does uninsured motorist coverage differ between the two policies?",
+    "expected_answer": "Version A provides uninsured motorist coverage up to $50,000 per person. Version B doubled this to $100,000 per person.",
+    "expected_pages": [1],
+    "expected_documents": ["policy_a.txt", "policy_b.txt"],
+    "requires_conflict_detection": true
+  },
+  {
+    "id": "md_007",
+    "category": "multi_document",
+    "question": "What changes were made to the claims filing deadline between the two versions?",
+    "expected_answer": "Version A requires claims to be filed within 60 days of the incident. Version B extended this to 90 days.",
+    "expected_pages": [3],
+    "expected_documents": ["policy_a.txt", "policy_b.txt"],
+    "requires_conflict_detection": true
+  },
+  {
+    "id": "md_008",
+    "category": "multi_document",
+    "question": "Under which jurisdiction are disputes resolved in each policy?",
+    "expected_answer": "Version A resolves disputes under Delaware jurisdiction. Version B changed this to California.",
+    "expected_pages": [3],
+    "expected_documents": ["policy_a.txt", "policy_b.txt"],
+    "requires_conflict_detection": true
+  },
+  {
+    "id": "md_009",
+    "category": "multi_document",
+    "question": "How does gap insurance differ between the two policy versions?",
+    "expected_answer": "In Version A, gap insurance is an optional add-on for financed or leased vehicles. In Version B, it is included as a standard feature for all such vehicles.",
+    "expected_pages": [2],
+    "expected_documents": ["policy_a.txt", "policy_b.txt"],
+    "requires_conflict_detection": true
+  },
+  {
+    "id": "md_010",
+    "category": "multi_document",
+    "question": "What new coverage was added to roadside assistance in Version B that was not in Version A?",
+    "expected_answer": "Version B added fuel delivery to the roadside assistance coverage. Version A only covered towing, flat tire change, battery jumpstart, and lockout services.",
+    "expected_pages": [2],
+    "expected_documents": ["policy_a.txt", "policy_b.txt"],
+    "requires_conflict_detection": false
+  },
+  {
+    "id": "cf_001",
+    "category": "conflicting",
+    "question": "What is the deductible under our insurance policy?",
+    "expected_answer": "The deductible depends on the policy version. Version A specifies $500, while the amended Version B specifies $750. These documents conflict on this point.",
+    "expected_pages": [1],
+    "expected_documents": ["policy_a.txt", "policy_b.txt"],
+    "requires_conflict_detection": true
+  },
+  {
+    "id": "cf_002",
+    "category": "conflicting",
+    "question": "When is the monthly payment due?",
+    "expected_answer": "The payment due date differs by version. Version A states payments are due by the 5th of each month. Version B states they are due by the 10th of each month.",
+    "expected_pages": [1],
+    "expected_documents": ["policy_a.txt", "policy_b.txt"],
+    "requires_conflict_detection": true
+  },
+  {
+    "id": "cf_003",
+    "category": "conflicting",
+    "question": "How long do I have to file a claim after an incident?",
+    "expected_answer": "Version A requires claims within 60 days. Version B extends this to 90 days. The policies conflict on this deadline.",
+    "expected_pages": [3],
+    "expected_documents": ["policy_a.txt", "policy_b.txt"],
+    "requires_conflict_detection": true
+  },
+  {
+    "id": "cf_004",
+    "category": "conflicting",
+    "question": "What is the maximum rental car reimbursement per day?",
+    "expected_answer": "The two policy versions conflict. Version A reimburses up to $30 per day, while Version B reimburses up to $40 per day.",
+    "expected_pages": [2],
+    "expected_documents": ["policy_a.txt", "policy_b.txt"],
+    "requires_conflict_detection": true
+  },
+  {
+    "id": "cf_005",
+    "category": "conflicting",
+    "question": "Is gap insurance included automatically or is it optional?",
+    "expected_answer": "The policies differ. Version A treats gap insurance as an optional add-on. Version B includes it as a standard feature. There is a direct conflict between the documents.",
+    "expected_pages": [2],
+    "expected_documents": ["policy_a.txt", "policy_b.txt"],
+    "requires_conflict_detection": true
+  },
+  {
+    "id": "cf_006",
+    "category": "conflicting",
+    "question": "What is the per-person bodily injury limit?",
+    "expected_answer": "Version A states $100,000 per person. Version B states $150,000 per person. The policies are in direct conflict.",
+    "expected_pages": [1],
+    "expected_documents": ["policy_a.txt", "policy_b.txt"],
+    "requires_conflict_detection": true
+  },
+  {
+    "id": "cf_007",
+    "category": "conflicting",
+    "question": "What state governs disputes under the insurance policy?",
+    "expected_answer": "Version A specifies Delaware. Version B specifies California. The documents conflict on jurisdiction.",
+    "expected_pages": [3],
+    "expected_documents": ["policy_a.txt", "policy_b.txt"],
+    "requires_conflict_detection": true
+  },
+  {
+    "id": "cf_008",
+    "category": "conflicting",
+    "question": "How many roadside assistance calls are allowed per year?",
+    "expected_answer": "Version A allows 4 service calls per policy year. Version B allows 6 service calls per policy year. The versions conflict.",
+    "expected_pages": [2],
+    "expected_documents": ["policy_a.txt", "policy_b.txt"],
+    "requires_conflict_detection": true
+  },
+  {
+    "id": "cf_009",
+    "category": "conflicting",
+    "question": "What is the medical payments coverage per person?",
+    "expected_answer": "Version A provides $5,000 per person per accident. Version B doubled this to $10,000 per person per accident. The documents conflict.",
+    "expected_pages": [1],
+    "expected_documents": ["policy_a.txt", "policy_b.txt"],
+    "requires_conflict_detection": true
+  },
+  {
+    "id": "cf_010",
+    "category": "conflicting",
+    "question": "What is the cancellation notice period?",
+    "expected_answer": "Version A requires 30 days notice for cancellation. Version B extended this to 45 days.",
+    "expected_pages": [2],
+    "expected_documents": ["policy_a.txt", "policy_b.txt"],
+    "requires_conflict_detection": true
+  },
+  {
+    "id": "fu_001",
+    "category": "follow_up",
+    "sequence": 1,
+    "question": "What is the deductible in Version A of the policy?",
+    "expected_answer": "The deductible in Version A of the policy is $500.",
+    "expected_pages": [1],
+    "expected_documents": ["policy_a.txt"]
+  },
+  {
+    "id": "fu_002",
+    "category": "follow_up",
+    "sequence": 2,
+    "question": "How does that compare to Version B?",
+    "expected_answer": "Version B has a higher deductible of $750, compared to $500 in Version A.",
+    "expected_pages": [1],
+    "expected_documents": ["policy_a.txt", "policy_b.txt"],
+    "note": "Depends on fu_001 answer for 'that' reference"
+  },
+  {
+    "id": "fu_003",
+    "category": "follow_up",
+    "sequence": 3,
+    "question": "And what about the medical payments coverage — is it also higher in Version B?",
+    "expected_answer": "Yes. Medical payments coverage in Version B ($10,000 per person) is double that of Version A ($5,000 per person).",
+    "expected_pages": [1],
+    "expected_documents": ["policy_a.txt", "policy_b.txt"]
+  },
+  {
+    "id": "fu_004",
+    "category": "follow_up",
+    "sequence": 1,
+    "question": "What roadside services does the policy cover?",
+    "expected_answer": "The policy covers 24/7 towing, flat tire change, battery jumpstart, and lockout services. Version B also adds fuel delivery.",
+    "expected_pages": [2],
+    "expected_documents": ["policy_a.txt", "policy_b.txt"]
+  },
+  {
+    "id": "fu_005",
+    "category": "follow_up",
+    "sequence": 2,
+    "question": "How many times per year can I use these services?",
+    "expected_answer": "Version A allows 4 service calls per year. Version B increased this to 6 service calls per year.",
+    "expected_pages": [2],
+    "expected_documents": ["policy_a.txt", "policy_b.txt"],
+    "note": "Depends on fu_004 for 'these services' reference"
+  },
+  {
+    "id": "fu_006",
+    "category": "follow_up",
+    "sequence": 1,
+    "question": "What is the rental car reimbursement in Version A?",
+    "expected_answer": "Version A reimburses up to $30 per day for a maximum of 10 days.",
+    "expected_pages": [2],
+    "expected_documents": ["policy_a.txt"]
+  },
+  {
+    "id": "fu_007",
+    "category": "follow_up",
+    "sequence": 2,
+    "question": "Did the amended policy change this limit?",
+    "expected_answer": "Yes. Version B increased the rental reimbursement to $40 per day for up to 14 days.",
+    "expected_pages": [2],
+    "expected_documents": ["policy_b.txt"],
+    "note": "Depends on fu_006 for 'this limit' reference"
+  },
+  {
+    "id": "fu_008",
+    "category": "follow_up",
+    "sequence": 1,
+    "question": "How long does the policy period run in Version A?",
+    "expected_answer": "The policy period in Version A runs from January 1, 2026 to December 31, 2026.",
+    "expected_pages": [1],
+    "expected_documents": ["policy_a.txt"]
+  },
+  {
+    "id": "fu_009",
+    "category": "follow_up",
+    "sequence": 2,
+    "question": "What about the other version?",
+    "expected_answer": "Version B runs a different period: from July 1, 2026 to June 30, 2027.",
+    "expected_pages": [1],
+    "expected_documents": ["policy_b.txt"],
+    "note": "Depends on fu_008 for 'the other version' reference"
+  },
+  {
+    "id": "fu_010",
+    "category": "follow_up",
+    "sequence": 3,
+    "question": "So there is overlap between the two periods?",
+    "expected_answer": "Yes. Both policies are active from July 1 to December 31, 2026, creating a six-month overlap period.",
+    "expected_pages": [1],
+    "expected_documents": ["policy_a.txt", "policy_b.txt"],
+    "note": "Multi-hop: requires synthesizing dates from fu_008 and fu_009"
+  },
+  {
+    "id": "am_001",
+    "category": "ambiguous",
+    "question": "What happens if I pay late?",
+    "expected_answer": "Under Version A, late payments incur a $25 fee, due by the 5th. Under Version B, the fee is $50, due by the 10th.",
+    "expected_pages": [1],
+    "expected_documents": ["policy_a.txt", "policy_b.txt"]
+  },
+  {
+    "id": "am_002",
+    "category": "ambiguous",
+    "question": "What protection do I get if someone hits me and they have no insurance?",
+    "expected_answer": "Uninsured motorist coverage is included. Version A covers up to $50,000 per person. Version B covers up to $100,000 per person.",
+    "expected_pages": [1],
+    "expected_documents": ["policy_a.txt", "policy_b.txt"]
+  },
+  {
+    "id": "am_003",
+    "category": "ambiguous",
+    "question": "If my car is stolen, what does the policy cover?",
+    "expected_answer": "Theft is covered under comprehensive coverage, which protects against damage caused by reasons other than collision including fire, theft, and windstorm. Version B also adds hail.",
+    "expected_pages": [1],
+    "expected_documents": ["policy_a.txt", "policy_b.txt"]
+  },
+  {
+    "id": "am_004",
+    "category": "ambiguous",
+    "question": "Can I get a temporary car if mine is in the shop?",
+    "expected_answer": "Yes. Rental car reimbursement is available for covered losses. Version A pays up to $30/day for 10 days. Version B pays up to $40/day for 14 days.",
+    "expected_pages": [2],
+    "expected_documents": ["policy_a.txt", "policy_b.txt"]
+  },
+  {
+    "id": "am_005",
+    "category": "ambiguous",
+    "question": "What if I want to make a change to my policy?",
+    "expected_answer": "Any changes must be requested in writing and approved by the underwriters. Version B adds that this approval should occur within 15 business days.",
+    "expected_pages": [2],
+    "expected_documents": ["policy_a.txt", "policy_b.txt"]
+  },
+  {
+    "id": "am_006",
+    "category": "ambiguous",
+    "question": "Is there help if I get a flat tire?",
+    "expected_answer": "Yes. Both policy versions include flat tire change as part of the 24/7 roadside assistance coverage.",
+    "expected_pages": [2],
+    "expected_documents": ["policy_a.txt", "policy_b.txt"]
+  },
+  {
+    "id": "am_007",
+    "category": "ambiguous",
+    "question": "What if I disagree with the insurance company's decision?",
+    "expected_answer": "Disputes are resolved jurisdictionally. Version A uses Delaware law. Version B changed this to California. Fraud or misrepresentation voids the policy without refund.",
+    "expected_pages": [3],
+    "expected_documents": ["policy_a.txt", "policy_b.txt"]
+  },
+  {
+    "id": "am_008",
+    "category": "ambiguous",
+    "question": "Does my policy cover hailstorms?",
+    "expected_answer": "Version B explicitly covers hail under comprehensive coverage. Version A does not list hail specifically, though its comprehensive coverage covers 'reasons other than collision' which could be interpreted to include hail.",
+    "expected_pages": [1],
+    "expected_documents": ["policy_a.txt", "policy_b.txt"]
+  },
+  {
+    "id": "am_009",
+    "category": "ambiguous",
+    "question": "How quickly must I report an accident?",
+    "expected_answer": "Claims must be filed within 60 days under Version A. Version B extended this period to 90 days.",
+    "expected_pages": [3],
+    "expected_documents": ["policy_a.txt", "policy_b.txt"]
+  },
+  {
+    "id": "am_010",
+    "category": "ambiguous",
+    "question": "Do I need to buy gap insurance separately for a financed car?",
+    "expected_answer": "It depends on your policy version. Under Version A, gap insurance is an optional add-on you must purchase separately. Under Version B, it is included as a standard feature for financed or leased vehicles at no extra cost.",
+    "expected_pages": [2],
+    "expected_documents": ["policy_a.txt", "policy_b.txt"]
+  }
+]

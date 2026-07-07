@@ -1,0 +1,138 @@
+{
+  "avg_recall_at_5": 1.0,
+  "avg_precision_at_5": 0.325,
+  "mrr": 1.0,
+  "avg_latency_ms": 1227.74,
+  "p95_latency_ms": 1971.82,
+  "queries_evaluated": 8,
+  "details": [
+    {
+      "id": "q1",
+      "question": "What is the deductible for the standard auto insurance policy?",
+      "expected_pages": [
+        1
+      ],
+      "latency_ms": 2286.41,
+      "recall": 1.0,
+      "precision": 0.4,
+      "reciprocal_rank": 1.0,
+      "retrieved_pages": [
+        1,
+        2,
+        1
+      ]
+    },
+    {
+      "id": "q2",
+      "question": "What are the coverage limits for bodily injury?",
+      "expected_pages": [
+        1
+      ],
+      "latency_ms": 1023.88,
+      "recall": 1.0,
+      "precision": 0.4,
+      "reciprocal_rank": 1.0,
+      "retrieved_pages": [
+        1,
+        1,
+        2
+      ]
+    },
+    {
+      "id": "q3",
+      "question": "What does the comprehensive coverage protect against?",
+      "expected_pages": [
+        1
+      ],
+      "latency_ms": 1387.59,
+      "recall": 1.0,
+      "precision": 0.4,
+      "reciprocal_rank": 1.0,
+      "retrieved_pages": [
+        1,
+        1,
+        2
+      ]
+    },
+    {
+      "id": "q4",
+      "question": "When is the monthly payment due and what is the late fee?",
+      "expected_pages": [
+        1
+      ],
+      "latency_ms": 1015.57,
+      "recall": 1.0,
+      "precision": 0.4,
+      "reciprocal_rank": 1.0,
+      "retrieved_pages": [
+        1,
+        2,
+        1
+      ]
+    },
+    {
+      "id": "q5",
+      "question": "What is the policy period for the insurance?",
+      "expected_pages": [
+        1
+      ],
+      "latency_ms": 999.85,
+      "recall": 1.0,
+      "precision": 0.4,
+      "reciprocal_rank": 1.0,
+      "retrieved_pages": [
+        1,
+        1,
+        2
+      ]
+    },
+    {
+      "id": "q6",
+      "question": "What does the roadside assistance coverage provide?",
+      "expected_pages": [
+        2
+      ],
+      "latency_ms": 1103.95,
+      "recall": 1.0,
+      "precision": 0.2,
+      "reciprocal_rank": 1.0,
+      "retrieved_pages": [
+        2,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "q7",
+      "question": "How many service calls are allowed under roadside assistance?",
+      "expected_pages": [
+        2
+      ],
+      "latency_ms": 1024.22,
+      "recall": 1.0,
+      "precision": 0.2,
+      "reciprocal_rank": 1.0,
+      "retrieved_pages": [
+        2,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "q8",
+      "question": "What is the rental car reimbursement limit?",
+      "expected_pages": [
+        2
+      ],
+      "latency_ms": 980.44,
+      "recall": 1.0,
+      "precision": 0.2,
+      "reciprocal_rank": 1.0,
+      "retrieved_pages": [
+        2,
+        1,
+        1
+      ]
+    }
+  ]
+}

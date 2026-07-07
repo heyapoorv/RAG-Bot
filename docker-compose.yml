@@ -1,0 +1,75 @@
+version: '3.8'
+
+services:
+  # ── MongoDB Database ────────────────────────────────────────────────────────
+  mongodb:
+    image: mongo:6.0
+    container_name: docintel_mongodb
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - docintel_net
+
+  # ── Redis Cache Backend ──────────────────────────────────────────────────────
+  redis:
+    image: redis:7.0-alpine
+    container_name: docintel_redis
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - docintel_net
+
+  # ── FastAPI Backend Server ──────────────────────────────────────────────────
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: docintel_backend
+    restart: always
+    ports:
+      - "8000:8000"
+    environment:
+      - ENVIRONMENT=production
+      - DEBUG=false
+      - MONGODB_URI=mongodb://mongodb:27017
+      - MONGODB_DB_NAME=rag_system
+      - REDIS_URL=redis://redis:6379/0
+      - PINECONE_API_KEY=${PINECONE_API_KEY}
+      - PINECONE_INDEX_NAME=${PINECONE_INDEX_NAME}
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+      - JWT_SECRET=${JWT_SECRET}
+      - ADMIN_KEY=${ADMIN_KEY}
+      - FRONTEND_URL=*
+    depends_on:
+      - mongodb
+      - redis
+    networks:
+      - docintel_net
+
+  # ── Frontend Web Server ─────────────────────────────────────────────────────
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: docintel_frontend
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - docintel_net
+
+volumes:
+  mongodb_data:
+  redis_data:
+
+networks:
+  docintel_net:
+    driver: bridge
